@@ -1,0 +1,40 @@
+# General
+.DS_Store
+*.log
+.vscode/
+.idea/
+task.md
+rules.md
+ai_changes_log.md
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Python / FastAPI (Backend)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+*.egg-info/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node / Next.js / React (Frontend)
+node_modules/
+.next/
+out/
+build/
+dist/
+.npm/
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel/
