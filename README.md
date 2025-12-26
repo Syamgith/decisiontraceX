@@ -41,21 +41,41 @@ cd frontend
 npm install
 ```
 
-### Running the Demo
+### Running the Demos
 
-#### 1. Generate Sample Traces
+We provide **two demo applications** to showcase the SDK's general-purpose nature:
 
-Run the demo pipeline to generate sample traces:
+#### Demo 1: Competitor Product Selection (E-commerce)
 
 ```bash
 cd backend
 python -m demo.pipeline
 ```
 
-This will:
-- Execute a 4-step competitor selection workflow
+This executes a 4-step workflow:
+1. **Keyword Generation** (mock LLM) - Extract search terms from product
+2. **Candidate Search** (mock API) - Retrieve potential competitors
+3. **Apply Filters** - Price range, rating, review count filters
+4. **Rank & Select** - Score and select best competitor
+
+#### Demo 2: Content Recommendation (Streaming Platform)
+
+```bash
+cd backend
+python -m demo2.pipeline
+```
+
+This executes a 4-step workflow:
+1. **User Profile Analysis** - Extract preferences from watch history
+2. **Content Retrieval** - Fetch catalog matching user preferences
+3. **Content Filtering** - Genre, rating, language, type filters
+4. **Ranking & Diversification** - Score content and ensure genre variety
+
+**Both demos:**
 - Write trace data to `data/traces.db`
 - Display results in the terminal
+- Generate traces viewable in the dashboard
+- Use the **same SDK** with different domains
 
 #### 2. Start the API Server
 
@@ -329,33 +349,43 @@ Get a specific trace with all steps
 - Error messages (for failed steps)
 - Execution duration
 
-## Demo Application
+## Demo Applications
 
-The demo implements a competitor product selection workflow:
+We provide **two complete demo applications** that showcase the SDK's general-purpose design:
 
-1. **Keyword Generation** (mock LLM)
-   - Extracts search keywords from product title
-   - Simulates GPT-4 with string manipulation
+### Demo 1: Competitor Product Selection (E-commerce)
 
-2. **Candidate Search** (mock API)
-   - Searches product database
-   - Returns scored results
+**Scenario:** Find the best competitor product to benchmark against
 
-3. **Apply Filters** (business logic)
-   - Price range: 0.5x - 2x of reference
-   - Rating: minimum 3.8 stars
-   - Reviews: minimum 100
+**Pipeline Steps:**
+1. **Keyword Generation** (mock LLM) - Extracts search keywords from product title
+2. **Candidate Search** (mock API) - Searches product database
+3. **Apply Filters** - Price range (0.5x-2x), rating (>3.8★), reviews (>100)
+4. **Rank & Select** - Scores by review count, rating, price proximity
 
-4. **Rank & Select** (ranking algorithm)
-   - Scores by review count, rating, price proximity
-   - Selects best competitor
+**Data:** 20 hardcoded products including edge cases (accessories, out-of-range prices, low ratings)
 
-### Demo Data
+### Demo 2: Content Recommendation (Streaming)
 
-The demo uses 20 hardcoded products with varying attributes to test:
-- Products that pass all filters
-- Products that fail specific filters
-- Edge cases (too expensive, too cheap, low reviews, accessories, etc.)
+**Scenario:** Recommend personalized content to a streaming platform user
+
+**Pipeline Steps:**
+1. **User Profile Analysis** - Extract preferences from watch history and profile
+2. **Content Retrieval** - Fetch catalog items matching user preferences
+3. **Content Filtering** - Genre match, minimum rating, language support, content type
+4. **Ranking & Diversification** - Score by relevance/popularity/recency, ensure genre variety
+
+**Data:** 20 content items (movies/series) with varying genres, ratings, and popularity
+
+### Key Takeaway
+
+**Both demos use the exact same SDK** with zero modifications. This proves the system is truly general-purpose:
+- Same `XRay` context manager API
+- Same metadata-based patterns
+- Same dashboard rendering
+- Different domains, same infrastructure
+
+This demonstrates that DecisionTrace X-Ray works for **any** multi-step decision workflow.
 
 ## Project Structure
 
@@ -372,8 +402,13 @@ decisiontraceX/
 │   ├── api/                     # FastAPI Server
 │   │   └── main.py
 │   │
-│   ├── demo/                    # Demo Application
-│   │   ├── data/products.py    # Dummy data
+│   ├── demo/                    # Demo 1: E-commerce
+│   │   ├── data/products.py    # Product data
+│   │   ├── steps/              # Pipeline steps
+│   │   └── pipeline.py         # Main runner
+│   │
+│   ├── demo2/                   # Demo 2: Streaming
+│   │   ├── data/content.py     # Content data
 │   │   ├── steps/              # Pipeline steps
 │   │   └── pipeline.py         # Main runner
 │   │
