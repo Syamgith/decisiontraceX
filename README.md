@@ -543,14 +543,4 @@ Make sure the API server is running on port 8000 and the frontend on port 5173 (
 
 SQLite uses WAL mode for better concurrency, but if you see locking errors, close other connections to the database.
 
-## License
 
-This is a demo project created for evaluation purposes.
-
-## Contributing
-
-This is a demo project and not currently accepting contributions.
-
----
-
-**Built with ❤️ using Python, FastAPI, React, and TypeScript**
