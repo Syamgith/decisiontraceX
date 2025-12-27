@@ -52,10 +52,29 @@ def run_competitor_selection_pipeline():
                 "count": len(keywords)
             })
 
-            step.set_reasoning(
-                "Extracted key product attributes from title: material (stainless steel), "
-                "capacity (32oz), and feature (insulated)"
-            )
+            # Build dynamic reasoning based on what was actually extracted
+            attributes_found = []
+            title_lower = REFERENCE_PRODUCT["title"].lower()
+
+            # Check what attributes were identified
+            if "stainless steel" in title_lower:
+                attributes_found.append("material (stainless steel)")
+            if "32oz" in title_lower:
+                attributes_found.append("capacity (32oz)")
+            if "insulated" in title_lower:
+                attributes_found.append("feature (insulated)")
+
+            # Generate dynamic reasoning
+            if attributes_found:
+                step.set_reasoning(
+                    f"Generated {len(keywords)} search keywords by extracting key attributes: "
+                    f"{', '.join(attributes_found)}. Primary keyword: '{keywords[0]}'"
+                )
+            else:
+                step.set_reasoning(
+                    f"Generated {len(keywords)} search keywords from product title. "
+                    f"Primary keyword: '{keywords[0]}'"
+                )
 
             # Add LLM metadata
             step.add_llm_metadata(

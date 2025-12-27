@@ -36,7 +36,7 @@ CONTENT_POOL = [
         "language": "english",
         "duration_min": 169,
         "release_year": 2014,
-        "rating": 4.6,
+        "rating": 4.9,
         "views": 15000000,
         "popularity_score": 0.95,
         "tags": ["space", "time-travel", "drama"]
@@ -124,7 +124,7 @@ CONTENT_POOL = [
         "language": "english",
         "duration_min": 50,
         "release_year": 2019,
-        "rating": 4.9,
+        "rating": 4.4,
         "views": 25000000,
         "popularity_score": 0.96,
         "tags": ["nature", "wildlife", "environment"]
